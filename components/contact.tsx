@@ -3,6 +3,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import AnimatedText from '../components/AnimatedText';
+import Link from "next/link";
 
 // ─── EMAILJS CONFIG ────────────────────────────────────────────────────────────
 // Replace these three values with your real credentials from emailjs.com
