@@ -5,6 +5,8 @@ import { useGLTF, OrbitControls, Float } from '@react-three/drei';
 import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import AnimatedText from '../components/AnimatedText';
+import Link from "next/link";
+
 
 export default function Home() {
   return (
