@@ -31,9 +31,11 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center md:justify-start">
+              <Link  href='/classroom'>
               <button className="px-6 py-2 bg-pink-600 hover:bg-pink-700 transition rounded text-white text-sm">
                 Get Started
               </button>
+              </Link>
             </div>
           </AnimatedText>
         </div>
