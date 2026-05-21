@@ -5,6 +5,8 @@ import { useGLTF, OrbitControls, Float } from '@react-three/drei';
 import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import AnimatedText from '../components/AnimatedText';
+import Link from "next/link";
+
 
 export default function Home() {
   return (
@@ -31,9 +33,11 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center md:justify-start">
+              <Link  href='/classroom'>
               <button className="px-6 py-2 bg-pink-600 hover:bg-pink-700 transition rounded text-white text-sm">
                 Get Started
               </button>
+              </Link>
             </div>
           </AnimatedText>
         </div>
