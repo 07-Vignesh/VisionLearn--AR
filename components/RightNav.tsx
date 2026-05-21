@@ -12,11 +12,11 @@ const sections = [
 
 export default function RightNav() {
   const [active, setActive] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       let currentSection = 'home';
-
       sections.forEach(({ id }) => {
         const el = document.getElementById(id);
         if (el) {
@@ -26,43 +26,91 @@ export default function RightNav() {
           }
         }
       });
-
       setActive(currentSection);
     };
-
-    handleScroll(); // set initial
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setMenuOpen(false);
   };
 
   return (
-    <div>
-      <Image 
-        src="/logo.png" 
-        alt="VisionLearn AR Logo" 
-        width={200} 
-        height={200} 
-        className="fixed top-2 sm:-top-4 md:-top-12 left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0 md:left-12 z-50 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56" 
-      />
-      <div className="fixed top-22 sm:top-20 md:top-4 right-2 sm:right-4 md:right-4 z-50 flex gap-2 flex-wrap bg-transparent-800 px-4 py-2 rounded-xl shadow-lg backdrop-blur-md   ">
-        {sections.map(({ id, label }) => (
+    <>
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
+        <div className="flex items-center justify-between px-2 md:px-10 h-20">
+          
+          {/* Logo */}
+          <div className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="VisionLearn AR Logo"
+              width={160}
+              height={60}
+              className="h-32 w-auto object-contain"
+              priority
+            />
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center  gap-2">
+            {sections.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className={`text-sm px-4 py-2 rounded-md font-medium transition-all duration-300
+                  ${active === id
+                    ? 'bg-fuchsia-600 text-white shadow-lg shadow-fuchsia-600/30'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'}
+                `}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Hamburger */}
           <button
-            key={id}
-            onClick={() => scrollTo(id)}
-            className={`text-xs sm:text-sm px-2 py-1 rounded-md transition-all duration-300
-              ${active === id
-                ? 'bg-fuchsia-600 text-white font-semibold'
-                : 'bg-gray-700 text-white hover:bg-gray-600 opacity-80'}
-            `}
+            className="md:hidden flex flex-col justify-center mr-6 items-center w-10 h-10 gap-1.5 rounded-md bg-gray-800 hover:bg-gray-700 transition-colors"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
           >
-            {label}
+            <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
-        ))}
-      </div>
-    </div>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            menuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="flex flex-col gap-1 px-4 pb-4 pt-1 bg-black/80 backdrop-blur-md">
+            {sections.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className={`text-sm px-4 py-3 rounded-md font-medium text-left transition-all duration-300
+                  ${active === id
+                    ? 'bg-fuchsia-600 text-white shadow-lg shadow-fuchsia-600/20'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'}
+                `}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* Spacer so page content doesn't hide under navbar */}
+      <div className="h-20" />
+    </>
   );
 }

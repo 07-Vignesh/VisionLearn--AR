@@ -244,7 +244,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p style={{ fontSize:'11px', color:'rgba(255,255,255,.38)', marginBottom:'2px', textTransform:'uppercase', letterSpacing:'.5px' }}>Location</p>
-                      <p style={{ fontSize:'14px', color:'#fff', fontWeight:500 }}>Karikudi, Tamil Nadu</p>
+                      <p style={{ fontSize:'14px', color:'#fff', fontWeight:500 }}>Chennai, Tamil Nadu</p>
                     </div>
                   </div>
                 </div>
