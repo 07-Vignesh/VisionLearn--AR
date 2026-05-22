@@ -11,14 +11,13 @@ import Homee from '../components/home.jsx';
 
 export default function Home() {
   const [color, setColor] = useState('#ffffff');
-  const [activeSection, setActiveSection] = useState('home');
 
-  const sectionColorMap = {
-    home: '#ffffff',
+  const sectionColorMap: Record<string, string> = {
+    home:     '#ffffff',
     training: '#00ffea',
-    classes: '#1e90ff',
-    about: '#ffb347',
-    contact: '#add8e6',
+    classes:  '#1e90ff',
+    about:    '#ffb347',
+    contact:  '#add8e6',
   };
 
   useEffect(() => {
@@ -28,91 +27,59 @@ export default function Home() {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.5) {
-            setActiveSection(id);
-            setColor(sectionColorMap[id as keyof typeof sectionColorMap] || '#ffffff');
+          if (
+            rect.top <= window.innerHeight * 0.5 &&
+            rect.bottom >= window.innerHeight * 0.5
+          ) {
+            setColor(sectionColorMap[id] ?? '#ffffff');
             break;
           }
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const ActiveAR = ARCanvas;
-
   return (
     <main className="relative w-screen overflow-x-hidden">
+      {/* Nav */}
       <RightNav />
 
-      {/* AR Canvas Background */}
-      <div className="fixed top-[10%] inset-0 z-0">
-        <ActiveAR color={color} />
+      {/* AR Canvas — fixed background */}
+      <div className="fixed inset-0 top-[10%] z-0 pointer-events-none">
+        <ARCanvas color={color} />
       </div>
 
-      {/* Page Content */}
-      <div className="relative z-10 text-white w-screen">
-        {/* Home Section */}
-        <section
-          id="home"
-          className="min-h-screen w-screen flex items-center justify-center px-4 sm:px-6 md:px-8 max-md:py-16 mt-32"
-        >
-          <div className="flex flex-col md:flex-row gap-12 max-w-7xl w-full">
-            <div className="flex-1">
-              <Homee />
-            </div>
-          </div>
+      {/* Scrollable content */}
+      <div className="relative z-10 text-white">
+
+        {/* ── Home ── */}
+        <section id="home" className="w-screen">
+          <Homee />
         </section>
 
-        {/* Training Section */}
-        <section
-          id="training"
-          className="min-h-screen w-screen flex items-center justify-center px-4 sm:px-6 md:px-8 max-md:py-16 mt-20"
-        >
-          <div className="flex flex-col md:flex-row gap-12 max-w-7xl w-full">
-            <div className="flex-1">
-              <Training />
-            </div>
-          </div>
+        {/* ── Training ── */}
+        <section id="training" className="w-screen min-h-screen">
+          <Training />
         </section>
 
-        {/* Classes Section */}
-        <section
-          id="classes"
-          className="min-h-screen w-screen flex items-center justify-center px-4 sm:px-6 md:px-8 max-md:py-16 mt-20"
-        >
-          <div className="flex flex-col md:flex-row gap-12 max-w-7xl w-full">
-            <div className="flex-1">
-              <Classes />
-            </div>
-          </div>
+        {/* ── Classes ── */}
+        <section id="classes" className="w-screen min-h-screen">
+          <Classes />
         </section>
 
-        {/* About Section */}
-        <section
-          id="about"
-          className="min-h-screen w-screen flex items-center justify-center px-4 sm:px-6 md:px-8 max-md:py-16 mt-20"
-        >
-          <div className="flex flex-col md:flex-row gap-12 max-w-7xl w-full">
-            <div className="flex-1">
-              <About />
-            </div>
-          </div>
+        {/* ── About ── */}
+        <section id="about" className="w-screen min-h-screen">
+          <About />
         </section>
 
-        {/* Contact Section */}
-        <section
-          id="contact"
-          className="min-h-screen w-screen flex items-center justify-center px-4 sm:px-6 md:px-8 max-md:py-16 mt-20"
-        >
-          <div className="flex flex-col md:flex-row gap-12 max-w-7xl w-full">
-            <div className="flex-1">
-              <Contact />
-            </div>
-          </div>
+        {/* ── Contact ── */}
+        <section id="contact" className="w-screen min-h-screen">
+          <Contact />
         </section>
+
       </div>
     </main>
   );

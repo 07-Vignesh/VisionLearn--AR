@@ -42,19 +42,30 @@ export default function RightNav() {
     <>
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
-        <div className="flex items-center justify-between px-2 md:px-10 h-20">
-          
+<div className="flex items-center justify-between px-3 md:px-10 h-24">          
           {/* Logo */}
-          <div className="flex items-center">
-            <Image
-              src="/logo.png"
-              alt="VisionLearn AR Logo"
-              width={160}
-              height={60}
-              className="h-32 w-auto object-contain"
-              priority
-            />
-          </div>
+         {/* Logo */}
+<div className="flex items-center">
+
+  <Image
+    onClick={() => scrollTo('home')}
+
+    src="/logo2.png"
+    alt="VisionLearn AR Logo"
+    width={260}
+    height={260}
+    priority
+    className="
+      w-auto
+      h-20
+      sm:h-24
+      md:h-28
+      lg:h-32
+      object-contain
+    "
+  />
+
+</div>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center  gap-2">
